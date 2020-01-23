@@ -53,6 +53,7 @@ We can do that with a method provided by the django library.
 ```
 3)Then copy the [GENERATED KEY] and replace the string on line 23 in /settings.py.
 
+
 Here you can change your user/password for DATABASES:
 ```
 DATABASES = {

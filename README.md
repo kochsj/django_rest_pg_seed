@@ -29,26 +29,30 @@ You will want to rename your project and rename your application. This is a proc
 
 2. In project directory /urls.py line 22: Change path('api/v1/', include('seed_app.urls')), to include 'your_new_app.urls'
 
-3. In apps.py: Change SeedAppConfig and name = 'seed_app' to YourAppConfig and name = 'your_app'
+3. In /apps.py: Change SeedAppConfig and name = 'seed_app' to YourAppConfig and name = 'your_app'
 
 4. Edit the database table django_content_type with the following command: UPDATE django_content_type SET app_label='<NewAppName>' WHERE app_label='<OldAppName>'
 
+### Building your docker container
+```$ docker_compose build```
 
 ### Adding your own Secret Key - [Unique Security Keys](https://stackoverflow.com/questions/4664724/distributing-django-projects-with-unique-secret-keys/16630719#16630719)
 We need to generate a unique security key. Project directory /settings.py Line 23: 
 ```SECRET_KEY = '---------SECURITY KEY GOES HERE---------------------'```
 We can do that with a method provided by the django library.
 
-First open the django bash shell: ```python manage.py bash```
+1) First open the django bash shell: ```docker_compose run web python manage.py shell```
 
-Enter the following two lines. Import and function call:
+2) Enter the following two lines. Import and function call:
 
 ```
-from django.core.management.utils import get_random_secret_key
-get_random_secret_key()
-'[GENERATED KEY]'
-Then copy the [GENERATED KEY] and replace the string on line 23 in /settings.py.
+>>> from django.core.management.utils import get_random_secret_key
+>>> get_random_secret_key()
+    '[GENERATED KEY]'
+>>> exit()
 ```
+3)Then copy the [GENERATED KEY] and replace the string on line 23 in /settings.py.
+
 Here you can change your user/password for DATABASES:
 ```
 DATABASES = {
@@ -61,3 +65,4 @@ DATABASES = {
         'PORT': 5432,
     }
 }
+
